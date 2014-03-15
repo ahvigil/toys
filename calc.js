@@ -24,42 +24,53 @@ Array.prototype.peek = function(){
 function evaluate(e){
     var numStack = [];  // number stack
     var opStack = [];   // operator stack
-
+    
+    e = e.trim(); // clean up if necessary
+    
     // initial parsing of expression
-    for(var i=0;i<e.length;i++) {
-        
+    while(e.length>0) {
         // numbers go on number stack
-        if (/\d/.test(e[i])) {
+        if (/\d/.test(e[0])) {
             // but check to see if number spans multiple digits
-            var j=i;
-            while(/\d/.test(e[j+1])) j++;
-            numStack.push(Number(e.slice(i,j+1)));
-            i=j;
+            var j=0;
+            while(/\d/.test(e[j])) j++;
+            numStack.push(Number(e.slice(0,j)));
+            e=e.slice(j);
         }
         
         // push operators onto operator stack
-        else if (OPERATORS.test(e[i])) {  // test to see if character is operator
+        else if (OPERATORS.test(e[0])) {  // test to see if character is operator
             // always evaluate preceding '/' and '*' since they have priority
             if (opStack.peek() == '*' || opStack.peek() == '/') {
                 OP_EXEC[opStack.pop()](numStack);
             }
-            opStack.push(e[i]);
+            opStack.push(e[0]);
+            e=e.slice(1);
         }
         
         // strip out parenthesis using recursion
-        else if (e[i]=='(') {
-            var j = e.lastIndexOf(')');
-            var innerResult = evaluate(e.slice(i+1,j));
+        else if (e[0]=='(') {
+            // match opening and closing parens
+            var k = e.indexOf('(', 1);
+            var j = e.indexOf(')', 1);
+            while(k!=-1 && k<j){
+                k= e.indexOf('(', k+1);
+                j = e.indexOf(')', j+1);
+            }
+
+            var innerResult = evaluate(e.slice(1,j));
             numStack.push(innerResult);
-            e = e.slice(j);
-            i=0;
+            e = e.slice(j+1);
         }
         
         // don't know how to handle any other characters, but ignore whitespace
-        else if (!/\s/.test(e[i])){ // if character is not whitespace
-            process.stderr.write(e + "\nError parsing expression at col:" + (i+1) + "\n");
+        else if (!/\s/.test(e[0])){ // if character is not whitespace
+            process.stderr.write(e + "\nError parsing expression :" + e + "\n");
             process.exit(1);
         }
+        
+        else process.stdout.write(e.length + '\n');
+        
     }
     
     // evaluate whatever is left after the first pass

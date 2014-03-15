@@ -34,7 +34,7 @@ function evaluate(e){
             var j=i;
             while(/\d/.test(e[j+1])) j++;
             numStack.push(Number(e.slice(i,j+1)));
-            i+=j-i;
+            i=j;
         }
         
         // push operators onto operator stack

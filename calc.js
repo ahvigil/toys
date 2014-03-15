@@ -68,9 +68,6 @@ function evaluate(e){
             process.stderr.write(e + "\nError parsing expression :" + e + "\n");
             process.exit(1);
         }
-        
-        else process.stdout.write(e.length + '\n');
-        
     }
     
     // evaluate whatever is left after the first pass

@@ -1,3 +1,0 @@
-import BaseSpaceDownloader
-
-BaseSpaceDownloader.main()

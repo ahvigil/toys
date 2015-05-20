@@ -20,6 +20,8 @@ TI_PATH = "typicons.yml"
 # use existing package text to start out 
 INTRO = """
 %% start of file `typicons.sty'.
+%% Copyright 2015 Arthur Vigil (arthur.h.vigil@gmail.com)
+%% Based on 'fontawesome' package by Xavier Danaux
 %% Copyright 2013 Xavier Danaux (xdanaux@gmail.com).
 %
 % This work may be distributed and/or modified under the
@@ -31,7 +33,7 @@ INTRO = """
 %                identification
 %-------------------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{typicons}[2013/05/10 v3.1.1 font awesome icons]
+\ProvidesPackage{typicons}[2015/05/20  v2.0.3 typicon icons]
 
 
 %-------------------------------------------------------------------------------

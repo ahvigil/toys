@@ -44,7 +44,7 @@ INTRO = """
 %                implementation
 %-------------------------------------------------------------------------------
 
-% definition of \TI as a shortcut to load the Font Awesome font
+% definition of \TI as a shortcut to load the Typicon font
 \\newfontfamily{\TI}{Typicons}
 
 % generic command to display an icon by its name
@@ -54,7 +54,7 @@ INTRO = """
 % icon-specific commands
 """
 
-# use argv as path to the fontawesome stylesheet if present
+# use argv as path to the typicon stylesheet if present
 if len(sys.argv) is 2:
     TI_PATH = sys.argv[1]
 

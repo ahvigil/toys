@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 font-awesome latex .sty file generator to create LaTeX package files
 based on the fontawesome latex package at

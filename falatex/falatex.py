@@ -12,8 +12,9 @@ useage: python falatex.py [font-awesome.css]
 """
 
 import re, os.path, sys
+import urllib2
 
-FA_PATH = "font-awesome.css"
+FA_URL = "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/css/font-awesome.css"
 
 # use existing package text to start out 
 INTRO = """
@@ -51,34 +52,26 @@ INTRO = """
 
 % icon-specific commands
 """
-
-# use argv as path to the fontawesome stylesheet if present
-if len(sys.argv) is 2:
-    FA_PATH = sys.argv[1]
-
-if not os.path.exists('font-awesome.css'):
-    print "%s file could be found, needed to continue" % FA_PATH
-    sys.exit(1)
     
 out = open('fontawesome.sty','w')
 out.write(INTRO)
 
-with open('font-awesome.css') as stylesheet:
-    fa = stylesheet.read()
-    
-    for match in re.finditer(".fa-(.*):before {\s*content: \"\\\\(....)", fa):
-        name = match.group(1).replace('-', ' ').title().replace(' ','')
-        css = match.group(1)
-        code = match.group(2).upper()
-        line =("\\expandafter\\def\\csname faicon@%s\\endcsname              " +\
-        "{\\symbol{\"%s}}  \\def\\fa%s             " +\
-        "{{\\FA\\csname faicon@%s\endcsname}}\n") % (css, code, name,css)
-        
-        # group hex values in sets of 16
-        if code[3] == '0': line = '\n' + line
+stylesheet = urllib2.urlopen(FA_URL)
+fa = stylesheet.read()
 
-        out.write(line)
-        
+for match in re.finditer(".fa-(.*):before {\s*content: \"\\\\(....)", fa):
+    name = match.group(1).replace('-', ' ').title().replace(' ','')
+    css = match.group(1)
+    code = match.group(2).upper()
+    line =("\\expandafter\\def\\csname faicon@%s\\endcsname              " +\
+    "{\\symbol{\"%s}}  \\def\\fa%s             " +\
+    "{{\\FA\\csname faicon@%s\endcsname}}\n") % (css, code, name,css)
+    
+    # group hex values in sets of 16
+    if code[3] == '0': line = '\n' + line
+
+    out.write(line)
+    
 out.write("""
 \endinput
 

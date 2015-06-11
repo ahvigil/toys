@@ -44,7 +44,7 @@ INTRO = """
 %-------------------------------------------------------------------------------
 
 % definition of \FA as a shortcut to load the Font Awesome font
-\\newfontfamily{\FA}{FontAwesome}
+\\newfontfamily{\FA}{FontAwesome.otf}
 
 % generic command to display an icon by its name
 \\newcommand*{\\faicon}[1]{%
